@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-
+var isJump = false;
 class PlayScene extends Phaser.Scene {
   constructor() {
     super('PlayScene');
@@ -23,7 +23,7 @@ class PlayScene extends Phaser.Scene {
     this.ground = this.add.tileSprite(0, height, 88, 26, 'ground').setOrigin(0, 1);
     this.dino = this.physics.add.sprite(0, height, 'jug_run', 0).setCollideWorldBounds(true).setGravityY(5000).setDepth(1).setOrigin(0, 1);
     // setBodySize(44, 92)
-    this.dino.setScale(0.5);
+    this.dino.setScale(0.35);
 
     this.scoreText = this.add.text(width, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
     this.highScoreText = this.add.text(0, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
@@ -38,7 +38,7 @@ class PlayScene extends Phaser.Scene {
     this.environment.setAlpha(0);
 
     this.gameOverScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(0);
-    this.gameOverText = this.add.image(0, 0, 'game-over');
+    this.gameOverText = this.add.image(0, 0, 'gameover').setScale(0.25).setOrigin(0.5);
     this.restart = this.add.image(0, 80, 'restart').setInteractive();
     this.gameOverScreen.add([this.gameOverText, this.restart]);
 
@@ -135,12 +135,12 @@ class PlayScene extends Phaser.Scene {
       repeat: -1,
     });
 
-    this.anims.create({
-      key: 'enemy-dino-fly',
-      frames: this.anims.generateFrameNumbers('enemy-bird', { start: 0, end: 1 }),
-      frameRate: 6,
-      repeat: -1,
-    });
+    // this.anims.create({
+    //   key: 'enemy-dino-fly',
+    //   frames: this.anims.generateFrameNumbers('enemy-bird', { start: 0, end: 1 }),
+    //   frameRate: 6,
+    //   repeat: -1,
+    // });
   }
 
   handleScore() {
@@ -181,8 +181,8 @@ class PlayScene extends Phaser.Scene {
   handleInputs() {
     this.restart.on('pointerdown', () => {
       this.dino.setVelocityY(0);
-      this.dino.body.height = 92;
-      this.dino.body.offset.y = 0;
+      // this.dino.body.height = 92;
+      // this.dino.body.offset.y = 0;
       this.physics.resume();
       this.obsticles.clear(true, true);
       this.isGameRunning = true;
@@ -196,9 +196,10 @@ class PlayScene extends Phaser.Scene {
       }
 
       this.jumpSound.play();
+      this.isJump = true;
       // this.dino.body.height = 92;
       // this.dino.body.offset.y = 0;
-      this.dino.setVelocityY(-1600);
+      this.dino.setVelocityY(-2000);
       // this.dino.setTexture('jug_run', 0);
     });
 
@@ -208,7 +209,7 @@ class PlayScene extends Phaser.Scene {
       if (!this.dino.body.onFloor() || !this.isGameRunning) {
         return;
       }
-
+      this.isJump = false;
       // this.dino.body.height = 58;
       // this.dino.body.offset.y = 34;
     });
@@ -217,7 +218,7 @@ class PlayScene extends Phaser.Scene {
       if (this.score !== 0 && !this.isGameRunning) {
         return;
       }
-
+      this.isJump = true;
       // this.dino.body.height = 92;
       // this.dino.body.offset.y = 0;
     });
@@ -230,18 +231,19 @@ class PlayScene extends Phaser.Scene {
     let obsticle;
     if (obsticleNum > 6) {
       const enemyHeight = [20, 50];
-      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], `enemy-bird`).setOrigin(0, 1);
+      // obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], `enemy-bird`).setOrigin(0, 1);
       // obsticle.play('enemy-dino-fly', 1);
-      obsticle.body.height = obsticle.body.height / 1.5;
-      obsticle.setScale(0.2);
+      // obsticle.body.height = obsticle.body.height / 1.5;
+      // obsticle.setScale(0.1);
     } else {
-      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height, `obsticle-${obsticleNum}`).setOrigin(0, 1);
+      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 10, `obsticle-${obsticleNum}`).setOrigin(0, 1);
 
-      obsticle.body.offset.y = +10;
-      obsticle.setScale(0.25);
+      // obsticle.body.offset.y = +10;
+      obsticle.setScale(0.1);
+      obsticle.setImmovable();
     }
 
-    obsticle.setImmovable();
+    // obsticle.setImmovable();
   }
 
   update(time, delta) {
@@ -275,7 +277,12 @@ class PlayScene extends Phaser.Scene {
       this.dino.anims.stop();
       // this.dino.setTexture('dino', 0);
     } else {
-      this.dino.body.height <= 58 ? this.dino.play('dino-down-anim', true) : this.dino.play('dino-run', true);
+      // this.isJump === false ? this.dino.play('dino-down-anim', true) : this.dino.play('dino-run', true);
+      if (!this.isJump) {
+        this.dino.play('dino-down-anim', true);
+      } else {
+        this.dino.play('dino-run', true);
+      }
     }
   }
 }

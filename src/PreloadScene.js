@@ -57,6 +57,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('obsticle-5', 'assets/coffe_cup.png');
     this.load.image('obsticle-6', 'assets/spoon.png');
 
+    this.load.image('gameover', 'assets/gameover.png');
+
     this.load.image('background', 'assets/background.png');
 
     this.load.image('duck', 'assets/duck.png');
@@ -65,8 +67,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('music', 'assets/music.mp3');
 
     this.load.spritesheet('jug_duck', 'assets/jug_duck.png', {
-      frameWidth: 317,
-      frameHeight: 317,
+      frameWidth: 315,
+      frameHeight: 280,
     });
     this.load.spritesheet('jug_run', 'assets/jug_run.png', {
       frameWidth: 290,
