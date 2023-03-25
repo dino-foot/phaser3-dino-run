@@ -6,13 +6,17 @@ import PreloadScene from './PreloadScene';
 const config = {
   type: Phaser.AUTO,
   width: 1000,
-  height: 340,
-  pixelArt: true,
+  height: 500,
+  pixelArt: false,
   transparent: true,
+  parent: 'phaser',
+  dom: {
+    createContainer: true,
+  },
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
   scale: {

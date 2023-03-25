@@ -6,6 +6,42 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    // const div = document.createElement('div');
+    // div.style = 'background-color: rgba(0,255,0,0.2); width: 250px; height: 100px; font: 48px Arial; font-weight: bold';
+    // div.innerText = 'Phaser 3';
+    // const element = this.add.dom(101, 700, div);
+    // const canvas = this.game.canvas;
+
+    const jumpDomBtn = window.document.getElementById('jump');
+    const duckDomBtn = window.document.getElementById('duck');
+
+    jumpDomBtn.addEventListener(
+      'click',
+      () => {
+        this.jumpBtn();
+      },
+      this
+    );
+
+    duckDomBtn.addEventListener(
+      'mousedown',
+      () => {
+        this.duckBtnDown();
+      },
+      this
+    );
+
+    duckDomBtn.addEventListener(
+      'mouseup',
+      () => {
+        this.duckBtnUp();
+      },
+      this
+    );
+
+    // console.log('canvas', jumpDomBtn);
+
+    isJump = false;
     const music = this.sound.add('music', { volume: 0.4 });
     music.play();
 
@@ -22,6 +58,7 @@ class PlayScene extends Phaser.Scene {
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, height, 88, 26, 'ground').setOrigin(0, 1);
     this.dino = this.physics.add.sprite(0, height, 'jug_run', 0).setCollideWorldBounds(true).setGravityY(5000).setDepth(1).setOrigin(0, 1);
+    this.dino.body.setSize(this.dino.width - 100, this.dino.heigh);
     // setBodySize(44, 92)
     this.dino.setScale(0.35);
 
@@ -203,8 +240,6 @@ class PlayScene extends Phaser.Scene {
       // this.dino.setTexture('jug_run', 0);
     });
 
-    // const jumpBtn = this.add.image(100, this.cameras.main.height, 'jump').setOrigin(0.5);
-
     this.input.keyboard.on('keydown_DOWN', () => {
       if (!this.dino.body.onFloor() || !this.isGameRunning) {
         return;
@@ -222,6 +257,35 @@ class PlayScene extends Phaser.Scene {
       // this.dino.body.height = 92;
       // this.dino.body.offset.y = 0;
     });
+  }
+
+  jumpBtn() {
+    console.log('jumpBtn');
+    if (!this.dino.body.onFloor() || this.dino.body.velocity.x > 0) {
+      return;
+    }
+
+    this.jumpSound.play();
+    this.isJump = true;
+    // this.dino.body.height = 92;
+    // this.dino.body.offset.y = 0;
+    this.dino.setVelocityY(-2000);
+    // this.dino.setTexture('jug_run', 0);
+  }
+
+  duckBtnDown() {
+    if (!this.dino.body.onFloor() || !this.isGameRunning) {
+      return;
+    }
+    this.isJump = false;
+    console.log('duckBtn down');
+  }
+
+  duckBtnUp() {
+    if (this.score !== 0 && !this.isGameRunning) {
+      return;
+    }
+    this.isJump = true;
   }
 
   placeObsticle() {
