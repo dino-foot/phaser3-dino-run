@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 var isJump = false;
 var timer = null;
+var backgroundTile = null;
 class PlayScene extends Phaser.Scene {
   constructor() {
     super('PlayScene');
@@ -63,10 +64,9 @@ class PlayScene extends Phaser.Scene {
     this.scoreText = this.add.text(width, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
     this.highScoreText = this.add.text(0, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
 
-    const background = this.add
-      .image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background')
-      .setScale(0.75)
-      .setDepth(-1);
+    backgroundTile = this.add.tileSprite(640, 200, 1280, 600, 'background').setScale(1).setDepth(-1);
+
+    // background.setScrollFactor(20, 1);
 
     this.environment = this.add.group();
     this.environment.addMultiple([this.add.image(width / 2, 170, 'cloud'), this.add.image(width - 80, 80, 'cloud'), this.add.image(width / 1.3, 100, 'cloud')]);
@@ -316,7 +316,7 @@ class PlayScene extends Phaser.Scene {
     if (!this.isGameRunning) {
       return;
     }
-
+    backgroundTile.tilePositionX += 0.75;
     this.ground.tilePositionX += this.gameSpeed;
     Phaser.Actions.IncX(this.obsticles.getChildren(), -this.gameSpeed);
     Phaser.Actions.IncX(this.environment.getChildren(), -0.5);
