@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-
+import MenuScene from './MenuScene';
 import PlayScene from './PlayScene';
 import PreloadScene from './PreloadScene';
 
@@ -24,7 +24,7 @@ const config = {
     // mode: Phaser.Scale.FIT,
     orientation: Phaser.Scale.Orientation.PORTRAIT,
   },
-  scene: [PreloadScene, PlayScene],
+  scene: [MenuScene, PreloadScene, PlayScene],
 };
 
 new Phaser.Game(config);

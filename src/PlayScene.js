@@ -11,7 +11,7 @@ class PlayScene extends Phaser.Scene {
     const duckDomBtn = window.document.getElementById('duck');
 
     jumpDomBtn.addEventListener(
-      'click',
+      'mousedown',
       () => {
         this.jumpBtn();
       },
@@ -19,7 +19,7 @@ class PlayScene extends Phaser.Scene {
     );
 
     duckDomBtn.addEventListener(
-      'click',
+      'mousedown',
       () => {
         this.duckBtnDown();
       },
