@@ -298,12 +298,12 @@ class PlayScene extends Phaser.Scene {
     let obsticle;
     if (obsticleNum > 5) {
       console.log('flying dino');
-      const enemyHeight = [100, 160];
+      const enemyHeight = [80, 100];
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], 'obsticle-4').setOrigin(0, 1);
       obsticle.body.height = obsticle.body.height / 1.5;
       obsticle.setScale(0.1);
     } else {
-      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 10, `obsticle-${obsticleNum}`).setOrigin(0, 1);
+      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 10, 'obsticle-1').setOrigin(0, 1);
       // obsticle.body.offset.y = +10;
       obsticle.setScale(0.1);
       // obsticle.setImmovable();

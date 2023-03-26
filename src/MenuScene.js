@@ -14,6 +14,7 @@ class MenuScene extends Phaser.Scene {
 
   preload() {
     this.load.image('logo', 'assets/ecoflow_logo.png');
+    this.load.image('play', 'assets/play.png');
 
     this.load.audio('jump', 'assets/jump.m4a');
     this.load.audio('hit', 'assets/hit.m4a');
@@ -32,9 +33,15 @@ class MenuScene extends Phaser.Scene {
     const logo = this.add.image(this.cameras.main.width / 2, 180, 'logo');
     logo.setOrigin(0.5);
     logo.setScale(0.65);
-    logo.setInteractive();
+    // logo.setInteractive();
 
-    logo.on(
+    const play = this.add
+      .image(this.cameras.main.width / 2, 450, 'play')
+      .setOrigin(0.5)
+      .setScale(0.65)
+      .setInteractive();
+
+    play.on(
       'pointerdown',
       () => {
         this.scene.start('PreloadScene');
