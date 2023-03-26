@@ -55,7 +55,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('obsticle-3', 'assets/coffe_cup.png');
     this.load.image('obsticle-4', 'assets/spoon.png');
     this.load.image('obsticle-5', 'assets/coffe_cup.png');
-    this.load.image('obsticle-6', 'assets/spoon.png');
+    this.load.image('obsticle-6', 'assets/coffe_cup.png');
 
     this.load.image('gameover', 'assets/gameover.png');
 
