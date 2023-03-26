@@ -18,20 +18,20 @@ class PlayScene extends Phaser.Scene {
     );
 
     duckDomBtn.addEventListener(
-      'mousedown',
+      'click',
       () => {
         this.duckBtnDown();
       },
       this
     );
 
-    duckDomBtn.addEventListener(
-      'mouseup',
-      () => {
-        this.duckBtnUp();
-      },
-      this
-    );
+    // duckDomBtn.addEventListener(
+    //   'mouseup',
+    //   () => {
+    //     this.duckBtnUp();
+    //   },
+    //   this
+    // );
 
     // console.log('canvas', jumpDomBtn);
 
@@ -59,10 +59,10 @@ class PlayScene extends Phaser.Scene {
     this.scoreText = this.add.text(width, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
     this.highScoreText = this.add.text(0, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
 
-    // const background = this.add
-    //   .image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background')
-    //   .setScale(0.5)
-    //   .setDepth(-1);
+    const background = this.add
+      .image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background')
+      .setScale(0.75)
+      .setDepth(-1);
 
     this.environment = this.add.group();
     this.environment.addMultiple([this.add.image(width / 2, 170, 'cloud'), this.add.image(width - 80, 80, 'cloud'), this.add.image(width / 1.3, 100, 'cloud')]);
@@ -139,8 +139,7 @@ class PlayScene extends Phaser.Scene {
               this.ground.width = width;
               this.isGameRunning = true;
               this.dino.setVelocityX(0);
-              this.scoreText.setAlpha(1);
-              this.environment.setAlpha(1);
+              this.scoreText.setAlpha(0); // remove cloud
               startEvent.remove();
             }
           },
@@ -272,7 +271,10 @@ class PlayScene extends Phaser.Scene {
       return;
     }
     this.isJump = false;
-    console.log('duckBtn down');
+    setTimeout(() => {
+      this.duckBtnUp();
+    }, 250);
+    // console.log('duckBtn down');
   }
 
   duckBtnUp() {
