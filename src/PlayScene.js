@@ -6,12 +6,6 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    // const div = document.createElement('div');
-    // div.style = 'background-color: rgba(0,255,0,0.2); width: 250px; height: 100px; font: 48px Arial; font-weight: bold';
-    // div.innerText = 'Phaser 3';
-    // const element = this.add.dom(101, 700, div);
-    // const canvas = this.game.canvas;
-
     const jumpDomBtn = window.document.getElementById('jump');
     const duckDomBtn = window.document.getElementById('duck');
 
