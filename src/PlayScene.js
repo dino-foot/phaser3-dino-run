@@ -9,6 +9,8 @@ class PlayScene extends Phaser.Scene {
   create() {
     const jumpDomBtn = window.document.getElementById('jump');
     const duckDomBtn = window.document.getElementById('duck');
+    duckDomBtn.style.visibility = 'visible'; // Show
+    jumpDomBtn.style.visibility = 'visible'; // Show
 
     jumpDomBtn.addEventListener(
       'mousedown',

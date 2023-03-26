@@ -5,6 +5,13 @@ class MenuScene extends Phaser.Scene {
     super('MenuScene');
   }
 
+  init() {
+    const jumpDomBtn = window.document.getElementById('jump');
+    const duckDomBtn = window.document.getElementById('duck');
+    duckDomBtn.style.visibility = 'hidden'; // Show
+    jumpDomBtn.style.visibility = 'hidden'; // Show
+  }
+
   preload() {
     this.load.image('logo', 'assets/ecoflow_logo.png');
 
